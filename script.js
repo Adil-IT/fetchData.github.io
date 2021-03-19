@@ -1,28 +1,18 @@
-const cat_btn = document.getElementById('cat_btn');
-const dog_btn = document.getElementById('dog_btn');
-const cat_result = document.getElementById('cat_result');
-const dog_result = document.getElementById('dog_result');
 
-cat_btn.addEventListener('click', getRandomCat);
-dog_btn.addEventListener('click', getRandomDog);
+const container = document.querySelector('.container')
+const unsplashURL = 'https://source.unsplash.com/random/'
+const rows = 5
 
-function getRandomCat() {
-	fetch('https://aws.random.cat/meow')
-		.then(res => res.json())
-		.then(data => {
-			cat_result.innerHTML = `<img src=${data.file} alt="cat" />`
-		});
+for(let i = 0; i < rows * 3; i++) {
+    const img = document.createElement('img')
+    img.src = `${unsplashURL}${getRandomSize()}`
+    container.appendChild(img)
 }
 
-function getRandomDog() {
-	fetch('https://random.dog/woof.json')
-		.then(res => res.json())
-		.then(data => {
-			if(data.url.includes('.mp4')) {
-				getRandomDog();
-			}
-			else {
-				dog_result.innerHTML = `<img src=${data.url} alt="dog" />`;
-			}
-		});
+function getRandomSize() {
+    return `${getRandomNr()}x${getRandomNr()}`
+}
+
+function getRandomNr() {
+    return Math.floor(Math.random() * 10) + 300
 }
